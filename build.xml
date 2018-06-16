@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" default="all" name="test-dot-target">
+	<property name="ivy.resolver.default.check.modified" value="true"/>
+
+	<property name="ivy.install.version" value="2.4.0"/>
+	<property name="ivy.jar.dir" value="${basedir}/ivy"/>
+	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
+
+	<property name="lib.dir" value="${basedir}/lib"/>
+	
+	<property name="root.dir" value="${user.home}/.test-dot-target"/>
+	<property name="build.dir" value="${root.dir}/classes"/>
+	<property name="dist" value="./target/test-dot-target.zip"/>
+	<property name="src.dir" value="${basedir}/src"/>
+	
+	<property name="web.dir" value="WebContent"/>
+	<property location="resources" name="resources.dir"/>
+	<property location="${web.dir}/WEB-INF/classes" name="web.classes.dir"/>
+	
+	<loadproperties srcFile="anypoint-credentials.properties"/>
+	
+	<target name="download-ivy" unless="skip.download">
+		<mkdir dir="${ivy.jar.dir}"/>
+		<!-- download Ivy from web site so that it can be used even without any 
+			special installation -->
+		<echo message="installing ivy..."/>
+		<get dest="${ivy.jar.file}" src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" usetimestamp="true"/>
+	</target>
+
+	<!-- ================================= target: install-ivy this target is 
+		not necessary if you put ivy.jar in your ant lib directory if you already 
+		have ivy in your ant lib, you can simply remove this target and the dependency 
+		the 'go' target has on it ================================= -->
+	<target depends="download-ivy" description="--&gt; install ivy" name="install-ivy">
+		<!-- try to load ivy here from local ivy dir, in case the user has not 
+			already dropped it into ant's lib dir (note that the latter copy will always 
+			take precedence). We will not fail as long as local lib dir exists (it may 
+			be empty) and ivy is in at least one of ant's lib dir or the local lib dir. -->
+		<path id="ivy.lib.path">
+			<fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+		</path>
+		<taskdef classpathref="ivy.lib.path" resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant"/>
+	</target>
+
+	<target name="all">
+
+	</target>
+
+	<target depends="install-ivy" name="ivy-retrieve">
+		<ivy:configure file="ivy-settings.xml"/>
+		<ivy:resolve file="ivy.xml"/>
+		<ivy:retrieve conf="main" pattern="${lib.dir}/[artifact].[ext]"/>
+	</target>
+
+	<target depends="install-ivy" name="ivy-clear-cache">
+		<ivy:cleancache/>
+	</target>
+
+	<target name="compile">
+		<path id="test-dot-target.lib.path">
+			<fileset dir="${basedir}/lib" includes="*.jar"/>
+		</path>
+		<javac classpathref="test-dot-target.lib.path" debug="true" destdir="${build.dir}" excludes="test/**" srcdir="${src.dir}">
+			<compilerarg line="-XDignore.symbol.file"/>
+		</javac>
+		<!--copy todir="${build.dir}/pages">
+			<fileset dir="${src.dir}/pages">
+			</fileset>
+		</copy-->
+
+		<copy todir="${build.dir}/lib">
+			<fileset dir="${lib.dir}">
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}/">
+			<fileset dir="${src.dir}">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+		<buildnumber file="./src/buildnumber.txt"/>
+		
+	</target>
+
+	<target description="copy Java resources like xml and properties files" name="copy-resources">
+		<copy failonerror="false" todir="${web.classes.dir}">
+			<fileset dir="${resources.dir}">
+				<include name="**/*.xml"/>
+				<include name="**/*.properties"/>
+			</fileset>
+			<fileset dir="${build.dir}"/>
+		</copy>
+	</target>
+	
+	<target name="mvn-compile">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="mvn clean compile -U"/>
+        </exec>
+    </target>	
+
+    <target depends="mvn-compile" name="overall-zip">
+    	<zip basedir="." destfile="/tmp/test-dot-target.zip"/>
+    </target>
+	 
+	
+	<target name="wait-for-start">
+		<echo message="Waiting for the app to get started."/>
+		<waitfor maxwait="90" maxwaitunit="second">
+			<available file="errors.log"/>		
+		</waitfor>
+    </target>
+	
+    <target name="mule-export-property">
+	    <propertyfile comment="" file="/tmp/mule_export.properties">
+		  <entry key="mule_export_version" value="1.0"/>
+		  <entry key="mule_exported_projects" value="test-dot-target"/>
+	    </propertyfile>    
+    </target>
+
+    <target depends="overall-zip, mule-export-property" name="mule-archive">
+	    <zip destfile="${dist}">
+			<zipfileset dir="./target/classes" prefix="classes"/>
+			<zipfileset dir="./src/main/app/"/>
+			<zipfileset file="./pom.xml"/>
+	    	<zipfileset file="/tmp/mule_export.properties" prefix="META-INF"/>
+			<zipfileset file="/tmp/test-dot-target.zip" prefix="META-INF"/>
+	    </zip>
+	    <antcall target="archive-clean"/>
+    </target>    
+    
+    <target name="archive-clean">
+	 	<delete file="/tmp/mule_export.properties"/>
+	 	<delete file="/tmp/test-dot-target.zip"/>
+    </target>
+	
+<target name="dev1-cloudhub-modify">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="anypoint-cli runtime-mgr cloudhub-application modify test-dot-target-dev1 ./target/test-dot-target.zip --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
+        </exec>
+        <antcall target="wait-for-start"/>
+    </target>
+    <target name="dev1-cloudhub-deploy">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="anypoint-cli runtime-mgr cloudhub-application deploy test-dot-target-dev1 ./target/test-dot-target.zip --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
+        </exec>
+        <antcall target="wait-for-start"/>
+    </target>
+    <target name="dev1-cloudhub-start">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="anypoint-cli runtime-mgr cloudhub-application start test-dot-target-dev1 --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
+        </exec>
+    </target>
+    <target name="dev1-cloudhub-stop">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="anypoint-cli runtime-mgr cloudhub-application stop test-dot-target-dev1 --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
+        </exec>
+    </target>
+    <target name="dev1-cloudhub-restart">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="anypoint-cli runtime-mgr cloudhub-application restart test-dot-target-dev1 --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
+        </exec>
+    </target>
+    <property name="org.name" value="opt"/>
+    <property name="build.type" value="jar"/>
+</project>
