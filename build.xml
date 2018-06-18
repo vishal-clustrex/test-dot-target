@@ -133,38 +133,9 @@
 	 	<delete file="/tmp/test-dot-target.zip"/>
     </target>
 	
-<target name="dev1-cloudhub-modify">
-        <exec executable="sh">
-            <arg value="-c"/>
-            <arg value="anypoint-cli runtime-mgr cloudhub-application modify test-dot-target-dev1 ./target/test-dot-target.zip --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
-        </exec>
-        <antcall target="wait-for-start"/>
+<target name="dev-sftp-deploy">
+        <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/root/dotoolkit/" trust="true"/>
     </target>
-    <target name="dev1-cloudhub-deploy">
-        <exec executable="sh">
-            <arg value="-c"/>
-            <arg value="anypoint-cli runtime-mgr cloudhub-application deploy test-dot-target-dev1 ./target/test-dot-target.zip --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
-        </exec>
-        <antcall target="wait-for-start"/>
-    </target>
-    <target name="dev1-cloudhub-start">
-        <exec executable="sh">
-            <arg value="-c"/>
-            <arg value="anypoint-cli runtime-mgr cloudhub-application start test-dot-target-dev1 --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
-        </exec>
-    </target>
-    <target name="dev1-cloudhub-stop">
-        <exec executable="sh">
-            <arg value="-c"/>
-            <arg value="anypoint-cli runtime-mgr cloudhub-application stop test-dot-target-dev1 --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
-        </exec>
-    </target>
-    <target name="dev1-cloudhub-restart">
-        <exec executable="sh">
-            <arg value="-c"/>
-            <arg value="anypoint-cli runtime-mgr cloudhub-application restart test-dot-target-dev1 --username ${dev1.username} --password ${dev1.password} --environment ${dev1.environment}"/>
-        </exec>
-    </target>
-    <property name="org.name" value="opt"/>
+    <property name="org.name" value="OPT"/>
     <property name="build.type" value="jar"/>
 </project>
