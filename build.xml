@@ -134,7 +134,7 @@
     </target>
 	
 <target name="dev-sftp-deploy">
-        <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/root/dotoolkit/" trust="true"/>
+        <scp file="./target/test-dot-target.zip" sftp="true" todir="venkat-pc:password123@localhost:/tmp/" trust="true"/>
     </target>
     <property name="org.name" value="OPT"/>
     <property name="build.type" value="jar"/>
