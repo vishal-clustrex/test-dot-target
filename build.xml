@@ -133,19 +133,7 @@
 	 	<delete file="/tmp/test-dot-target.zip"/>
     </target>
 	
-	<taskdef resource="com/opt/dob/git/ant-tasks.properties">
-	       <classpath>
-	       	 <pathelement location="$DOB_HOME/lib/jgit-ant-dob.jar"/>
-	         <pathelement location="$DOB_HOME/lib/org.eclipse.jgit-5.0.0.201806131550-r.jar"/>
-	         <pathelement location="$DOB_HOME/lib/jsch-0.1.53.jar"/>
-	       	 <pathelement location="$DOB_HOME/lib/slf4j-api-1.7.25.jar"/>
-	       </classpath>
-	</taskdef>
-	
-<target name="git-dob-clone">
-        <git-dob-clone dest="$WORKSPACE" isSsh="&quot;true&quot;" password="" uri="git@github.com:vishal-clustrex/test-dot-target.git" username=""/>
-    </target>
-    <target name="dev-sftp-deploy">
+<target name="dev-sftp-deploy">
         <scp file="./target/test-dot-target.zip" sftp="true" todir="venkat-pc:password123@localhost:/tmp/" trust="true"/>
     </target>
     <property name="org.name" value="OPT"/>
