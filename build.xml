@@ -142,7 +142,10 @@
 	       </classpath>
 	</taskdef>
 	
-<target name="dev-sftp-deploy">
+<target name="git-dob-clone">
+        <git-dob-clone dest="$WORKSPACE" isSsh="&quot;true&quot;" password="" uri="git@github.com:vishal-clustrex/test-dot-target.git" username=""/>
+    </target>
+    <target name="dev-sftp-deploy">
         <scp file="./target/test-dot-target.zip" sftp="true" todir="venkat-pc:password123@localhost:/tmp/" trust="true"/>
     </target>
     <property name="org.name" value="OPT"/>
