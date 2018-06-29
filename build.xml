@@ -138,4 +138,7 @@
     </target>
     <property name="org.name" value="OPT"/>
     <property name="build.type" value="jar"/>
+    <property name="ivy.publisher" value="filesystem-publisher"/>
+    <property name="ivy.revision" value=""/>
+    <property name="ivy.location" value="/tmp/test-dot/"/>
 </project>
