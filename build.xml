@@ -136,6 +136,14 @@
 <target name="dev-sftp-deploy">
         <scp file="./target/test-dot-target.zip" sftp="true" todir="venkat-pc:password123@localhost:/tmp/" trust="true"/>
     </target>
+    <target depends="install-ivy" name="sftp-dev-ivy-publish">
+        <ivy:settings file="ivy-settings.xml"/>
+        <ivy:resolve file="ivy.xml" revision="1.0"/>
+        <ivy:publish forcedeliver="true" module="test" organisation="${org.name}" overwrite="true" resolver="${ivy.publisher}" revision="1.0" update="true">
+            <artifacts pattern="/tmp/\[artifact].[ext]"/>
+        </ivy:publish>
+    </target>
+    <target depends="dev-clean,compile,sftp-dev-ivy-publish" name="dev-build"/>
     <property name="org.name" value="OPT"/>
     <property name="build.type" value="jar"/>
     <property name="ivy.publisher" value="filesystem-publisher"/>
