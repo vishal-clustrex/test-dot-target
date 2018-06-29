@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ivysettings>
+	<settings defaultConflictManager="all" defaultResolver="test-dot-target-dependancy-manager"/>
+
+	<resolvers>	
+		<filesystem name="filesystem-publisher">
+			<ivy pattern="${ivy.location}/[organisation]/[module]/ivy-[revision].xml"/>
+			<artifact pattern="${ivy.location}/[organisation]/[module]/[artifact].[ext]"/>
+		</filesystem>
+		
+		<sftp changingPattern=".*" checkmodified="true" host="${sftp.host}" latest="latest-time" name="sftp-publisher" user="${sftp.user}" userPassword="${sftp.password}">
+			<ivy pattern="${ivy.location}/[organisation]/[module]/ivy-[revision].xml"/>
+			<artifact pattern="${ivy.location}/[organisation]/[module]/[artifact].[ext]"/>
+		</sftp>
+		
+		<url changingPattern=".*" checkmodified="true" latest="latest-time" name="test-dot-target-dependancy-manager">
+			<ivy pattern="${published.location}/[organisation]/[module]/ivy-[revision].xml"/>
+			<artifact pattern="${published.location}/[organisation]/[module]/[artifact].[ext]"/>
+		</url>
+	</resolvers>
+</ivysettings>
