@@ -140,10 +140,10 @@
         <ivy:settings file="ivy-settings.xml"/>
         <ivy:resolve file="ivy.xml" revision="1.0"/>
         <ivy:publish forcedeliver="true" module="test" organisation="${org.name}" overwrite="true" resolver="${ivy.publisher}" revision="1.0" update="true">
-            <artifacts pattern="/tmp/\[artifact].[ext]"/>
+            <artifacts pattern="./target/[artifact].[ext]"/>
         </ivy:publish>
     </target>
-    <target depends="dev-clean,compile,sftp-dev-ivy-publish" name="dev-build"/>
+    <target depends="sftp-dev-ivy-publish" name="dev-build"/>
     <property name="org.name" value="OPT"/>
     <property name="build.type" value="jar"/>
     <property name="ivy.publisher" value="filesystem-publisher"/>
