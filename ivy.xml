@@ -9,7 +9,7 @@
 
 	<publications> 
 		
-	<artifact name="test-dot-target" type="jar"/>
+	<artifact name="test-dot-target" type="zip"/>
     </publications> 
 
 	<dependencies>
