@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns:ivy="antlib:org.apache.ivy.ant" default="all" name="test-dot-target">
+	<property environment="env"/>
 	<property name="ivy.resolver.default.check.modified" value="true"/>
 
 	<property name="ivy.install.version" value="2.4.0"/>
@@ -147,6 +148,6 @@
     <property name="org.name" value="OPT"/>
     <property name="build.type" value="jar"/>
     <property name="ivy.publisher" value="filesystem-publisher"/>
-    <property name="ivy.revision" value=""/>
+    <property name="ivy.revision" value="${env.BUILD_NUMBER}"/>
     <property name="ivy.location" value="/tmp/test-dot"/>
 </project>
