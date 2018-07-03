@@ -150,5 +150,5 @@
     <property name="build.type" value="jar"/>
     <property name="ivy.publisher" value="filesystem-publisher"/>
     <property name="ivy.revision" value="${env.BUILD_NUMBER}"/>
-    <property name="ivy.location" value="/tmp/test-dot"/>
+    <property name="ivy.location" value="F:\Vishal\tmp"/>
 </project>
