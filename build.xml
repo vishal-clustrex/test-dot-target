@@ -138,6 +138,7 @@
         <scp file="./target/test-dot-target.zip" sftp="true" todir="venkat-pc:password123@localhost:/tmp/" trust="true"/>
     </target>
     <target depends="install-ivy" name="sftp-dev-ivy-publish">
+        <echo message="${env.BUILD_NUMBER}"/>
         <ivy:settings file="ivy-settings.xml"/>
         <ivy:resolve file="ivy.xml" revision="1.0"/>
         <ivy:publish forcedeliver="true" module="test" organisation="${org.name}" overwrite="true" resolver="${ivy.publisher}" revision="1.0" update="true">
