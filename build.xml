@@ -135,7 +135,7 @@
     </target>
 	
 <target name="dev-sftp-deploy">
-        <scp file="./target/test-dot-target.zip" sftp="true" todir="venkat-pc:password123@localhost:/tmp/" trust="true"/>
+        <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/tmp/" trust="true"/>
     </target>
     <target depends="install-ivy" name="sftp-dev-ivy-publish">
         <echo message="${env.BUILD_NUMBER}"/>

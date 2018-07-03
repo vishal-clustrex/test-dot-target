@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd         
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd         
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd         
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	 
+	 <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" id="loadSystemProps">
+        <property name="targetObject">
+            <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                <property name="targetClass" value="java.lang.System"/>
+                <property name="targetMethod" value="getProperties"/>
+            </bean>
+        </property>
+        <property name="targetMethod" value="putAll"/>
+        <property name="arguments">
+            <util:properties>
+                <prop key="ELASTIC_URL">http://localhost:9200/</prop>	
+                <prop key="ANT_VERSION">1.7</prop>
+                <prop key="MULE_VERSION">3.8.2</prop>
+                <prop key="STORE_GIT_REPO_PATH">F:\\Vishal\\tmp\\dotoolkit\\</prop>
+                <prop key="STORE_ZIP_FILE">F:\\Vishal\\tmp\\zipfiles\\</prop>
+                <prop key="SERVER_LOG_FILE">F:\\Vishal\\AppLogs\\opt\\dotoolkit\\yyyy_mm_dd.request.log</prop>
+                <prop key="SAMPLE_ANT_BUILD_FILE">source-build.xml</prop>	
+                <prop key="SAMPLE_IVY_FILE">source-ivy.xml</prop>	
+                <prop key="SAMPLE_IVY_SETTINGS_FILE">source-ivy-settings.xml</prop>	
+                <prop key="SAMPLE_POM_FILE">source-pom.xml</prop>	
+                <prop key="SAMPLE_JENKINS_ANT_FILE">source-jenkins-config.xml</prop>	
+                <prop key="SAMPLE_JENKINS_MAVEN_FILE">source-jenkins-maven-config.xml</prop>	
+                <prop key="IVY_AND_JSCH_FILE_LOCATION"><!-- Ivy folder location that extracted --></prop>
+                
+                <prop key="OVERALL_APP_ZIP_PATH">F:\\Vishal\\tmp\\dotoolkit\\overallzip\\</prop>
+                <prop key="MULE_EXPORT_PROPERTY_PATH">F:\\Vishal\\tmp\\dotoolkit\\mule_export\\</prop>
+                <!-- Enable the below to prop if the app want to run in HTTPS -->
+                <!-- prop key="KEY_STORE_PATH"> Key store Path  </prop>
+                <prop key="KEY_STORE_PASSWORD"> Key store Password </prop -->
+                <prop key="MAX_TRY_DEPLOY_COUNT">10</prop>
+                <prop key="COOKIE_EXPIRE_TIME_IN_MIN">30</prop>
+                <prop key="INCLUDE_PATH_PATTERNS">/home/*,/build/*,/git/*,/user/*,/repository/*</prop>
+                <prop key="EXCLUDE_PATH_PATTERNS">/login/*,/util/*,/api/*</prop>
+                <prop key="REDIRECT_PAGE">/landing</prop>
+                <prop key="SHELLSCRIPT_PATH">shellscripts\\</prop>
+                <prop key="USING_SSH">yes</prop>
+            </util:properties>
+        </property>
+    </bean> 
+    
+    <bean id="repositories" class="java.util.ArrayList">
+	    <constructor-arg>
+	        <list>
+	            <value>SFTP</value>               
+	        </list>
+	    </constructor-arg>
+	  </bean>
+    
+    <bean id="users" class="java.util.ArrayList">
+	    <constructor-arg>
+	        <list>
+	            <ref bean="user1" />               
+	        </list>
+	    </constructor-arg>
+	  </bean>  
+	
+    <bean id="user1" class="com.opt.dotoolkit.vo.User">
+    	<property name="id" value="password" />
+    	<property name="username" value="username" />
+    	<property name="email" value="useremail" />
+    </bean>
+</beans>
