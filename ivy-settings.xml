@@ -8,7 +8,7 @@
 			<artifact pattern="${ivy.location}/[organisation]/[module]/[artifact].[ext]"/>
 		</filesystem>
 		
-		<sftp changingPattern=".*" checkmodified="true" host="${sftp.host}" latest="latest-time" name="sftp-publisher" user="${sftp.user}" userPassword="${sftp.password}">
+		<sftp changingPattern=".*" checkmodified="true" host="${ivy.sftp.host}" latest="latest-time" name="sftp-publisher" user="${ivy.sftp.user}" userPassword="${ivy.sftp.password}">
 			<ivy pattern="${ivy.location}/[organisation]/[module]/ivy-[revision].xml"/>
 			<artifact pattern="${ivy.location}/[organisation]/[module]/[artifact].[ext]"/>
 		</sftp>

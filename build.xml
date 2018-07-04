@@ -129,12 +129,20 @@
 	    <antcall target="archive-clean"/>
     </target>    
     
+	<target description="Decrypting all password" name="decrypt-all">
+		<taskdef classname="com.opt.dob.ant.tasks.DecryptionTask" classpath="${env.DOB_HOME}/lib/dob-crypto.jar" name="decrypt"/>
+	<decrypt key="sftp.password"/>
+    </target>
+	
     <target name="archive-clean">
 	 	<delete file="/tmp/mule_export.properties"/>
 	 	<delete file="/tmp/test-dot-target.zip"/>
     </target>
 	
-<target name="dev-sftp-deploy">
+<property name="sftp.host" value="159.65.153.86"/>
+    <property name="sftp.user" value="root"/>
+    <property name="sftp.password" value="AAEN~Y6etFpf}Z6W"/>
+    <target name="dev-sftp-deploy">
         <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/tmp/" trust="true"/>
     </target>
     <target depends="install-ivy" name="sftp-dev-ivy-publish">
