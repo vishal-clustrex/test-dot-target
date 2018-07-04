@@ -130,7 +130,7 @@
     </target>    
     
 	<target description="Decrypting all password" name="decrypt-all">
-		<taskdef classname="com.opt.dob.ant.tasks.DecryptionTask" classpath="${env.DOB_HOME}/lib/dob-crypto.jar" name="decrypt"/>
+		<taskdef classname="com.opt.dob.ant.tasks.DecryptionTask" classpath="./ivy/dob-crypto.jar" name="decrypt"/>
 	<decrypt key="sftp.password"/>
     </target>
 	
