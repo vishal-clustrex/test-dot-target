@@ -21,12 +21,12 @@
 	<loadproperties srcFile="anypoint-credentials.properties"/>
 	
 	<path id="build.path">
-		<fileset dir="ivy">
+		<fileset dir="./ivy">
 	    	<include name="**/*.jar"/>
 	  	</fileset>
 	</path>
 	
-	<taskdef classpathref="build.path"/>
+	<taskdef classpathref="build.path" uri="antlib:org.apache.ivy.ant"/> 
 			
 	<target name="download-ivy" unless="skip.download">
 		<mkdir dir="${ivy.jar.dir}"/>
