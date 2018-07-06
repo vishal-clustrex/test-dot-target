@@ -149,8 +149,6 @@
 	<target description="Decrypting all password" name="decrypt-all">
 		<taskdef classname="com.opt.dob.ant.tasks.DecryptionTask" classpath="./ivy/dob-crypto.jar" name="decrypt"/>
 	<decrypt key="sftp.password"/>
-    <decrypt key="sftp.password"/>
-    <decrypt key="sftp.password"/>
     </target>
 	
     <target name="archive-clean">
@@ -162,37 +160,6 @@
 		<antcall target="decrypt-all"/>
 	</target>
 	
-<property name="sftp.host" value="159.65.153.86"/>
-    <property name="sftp.user" value="root"/>
-    <property name="sftp.password" value="zXIrJNIFqWWtiY2iPgQtDw=="/>
-    
-    
-    
-    <property name="org.name" value="OPT"/>
-    <property name="build.type" value="jar"/>
-    <property name="ivy.publisher" value="filesystem-publisher"/>
-    <property name="ivy.revision" value="${env.BUILD_NUMBER}"/>
-    <property name="ivy.location" value="/tmp/ivy"/>
-<property name="sftp.host" value="159.65.153.86"/>
-    <property name="sftp.user" value="root"/>
-    <property name="sftp.password" value="zXIrJNIFqWWtiY2iPgQtDw=="/>
-    <target name="dev-sftp-deploy">
-        <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/tmp/" trust="true"/>
-    </target>
-    <target depends="install-ivy" name="sftp-dev-ivy-publish">
-        <echo message="${env.BUILD_NUMBER}"/>
-        <ivy:settings file="ivy-settings.xml"/>
-        <ivy:resolve file="ivy.xml" revision="1.0"/>
-        <ivy:publish forcedeliver="true" module="dob" organisation="${org.name}" overwrite="true" resolver="${ivy.publisher}" revision="1.0" update="true">
-            <artifacts pattern="./target/[artifact].[ext]"/>
-        </ivy:publish>
-    </target>
-    <target depends="sftp-dev-ivy-publish" name="dev-build"/>
-    <property name="org.name" value="OPT"/>
-    <property name="build.type" value="jar"/>
-    <property name="ivy.publisher" value="filesystem-publisher"/>
-    <property name="ivy.revision" value="${env.BUILD_NUMBER}"/>
-    <property name="ivy.location" value="/tmp/ivy"/>
 <property name="sftp.host" value="159.65.153.86"/>
     <property name="sftp.user" value="root"/>
     <property name="sftp.password" value="zXIrJNIFqWWtiY2iPgQtDw=="/>
