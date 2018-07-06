@@ -164,7 +164,7 @@
     <property name="sftp.user" value="root"/>
     <property name="sftp.password" value="zXIrJNIFqWWtiY2iPgQtDw=="/>
     <target name="dev-sftp-deploy">
-        <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/tmp/dob/" trust="true"/>
+        <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/tmp/" trust="true"/>
     </target>
     <target depends="install-ivy" name="sftp-dev-ivy-publish">
         <echo message="${env.BUILD_NUMBER}"/>
