@@ -20,6 +20,14 @@
 	
 	<loadproperties srcFile="anypoint-credentials.properties"/>
 	
+	<path id="build.path">
+		<fileset dir="ivy">
+	    	<include name="**/*.jar"/>
+	  	</fileset>
+	</path>
+	
+	<taskdef classpathref="build.path"/>
+			
 	<target name="download-ivy" unless="skip.download">
 		<mkdir dir="${ivy.jar.dir}"/>
 		<!-- download Ivy from web site so that it can be used even without any 
@@ -129,6 +137,15 @@
 	    <antcall target="archive-clean"/>
     </target>    
     
+	<target name="encrypt">
+		<echo message="Note :- Encrypt the password in which system you want to run your app"/>
+		<taskdef classname="com.opt.dob.ant.tasks.EncryptionTask" classpath="./ivy/dob-crypto.jar" name="encrypt"/>
+		<input addproperty="encrypt.password" message="Please enter password to encrypt:">
+			<handler type="secure"/>
+		</input>
+		<encrypt key="encrypt.password"/>
+	</target>
+	
 	<target description="Decrypting all password" name="decrypt-all">
 		<taskdef classname="com.opt.dob.ant.tasks.DecryptionTask" classpath="./ivy/dob-crypto.jar" name="decrypt"/>
 	<decrypt key="sftp.password"/>
@@ -139,17 +156,19 @@
 	 	<delete file="/tmp/test-dot-target.zip"/>
     </target>
 	
+	<antcall target="decrypt-all"/>
+	
 <property name="sftp.host" value="159.65.153.86"/>
     <property name="sftp.user" value="root"/>
-    <property name="sftp.password" value="AAEN~Y6etFpf}Z6W"/>
+    <property name="sftp.password" value="zXIrJNIFqWWtiY2iPgQtDw=="/>
     <target name="dev-sftp-deploy">
-        <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/tmp/" trust="true"/>
+        <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/tmp/dob/" trust="true"/>
     </target>
     <target depends="install-ivy" name="sftp-dev-ivy-publish">
         <echo message="${env.BUILD_NUMBER}"/>
         <ivy:settings file="ivy-settings.xml"/>
         <ivy:resolve file="ivy.xml" revision="1.0"/>
-        <ivy:publish forcedeliver="true" module="test" organisation="${org.name}" overwrite="true" resolver="${ivy.publisher}" revision="1.0" update="true">
+        <ivy:publish forcedeliver="true" module="dob" organisation="${org.name}" overwrite="true" resolver="${ivy.publisher}" revision="1.0" update="true">
             <artifacts pattern="./target/[artifact].[ext]"/>
         </ivy:publish>
     </target>
@@ -158,5 +177,5 @@
     <property name="build.type" value="jar"/>
     <property name="ivy.publisher" value="filesystem-publisher"/>
     <property name="ivy.revision" value="${env.BUILD_NUMBER}"/>
-    <property name="ivy.location" value="F:\Vishal\tmp"/>
+    <property name="ivy.location" value="/tmp/ivy"/>
 </project>
