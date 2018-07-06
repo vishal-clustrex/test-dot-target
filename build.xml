@@ -156,7 +156,9 @@
 	 	<delete file="/tmp/test-dot-target.zip"/>
     </target>
 	
-	<antcall target="decrypt-all"/>
+	<target name="default">
+		<antcall target="decrypt-all"/>
+	</target>
 	
 <property name="sftp.host" value="159.65.153.86"/>
     <property name="sftp.user" value="root"/>
