@@ -26,7 +26,9 @@
 	  	</fileset>
 	</path>
 	
-	<taskdef classpathref="build.path" uri="antlib:org.apache.ivy.ant"/> 
+	<target name="load-config"> 
+		<taskdef classpathref="build.path" uri="antlib:org.apache.ivy.ant"/> 
+	</target>
 			
 	<target name="download-ivy" unless="skip.download">
 		<mkdir dir="${ivy.jar.dir}"/>
@@ -158,13 +160,14 @@
 	
 	<target name="default">
 		<antcall target="decrypt-all"/>
+		<antcall target="load-config"/>
 	</target>
 	
 <property name="sftp.host" value="159.65.153.86"/>
     <property name="sftp.user" value="root"/>
-    <property name="sftp.password" value="zXIrJNIFqWWtiY2iPgQtDw=="/>
+    <property name="sftp.password" value="9suBovi387cE4SAULx6tUg=="/>
     <target name="qa-sftp-deploy">
-        <scp file="./target/test-dot-target.zip" sftp="true" todir="root:KernPike3$@159.65.153.86:/tmp/" trust="true"/>
+        <scp file="./target/test-dot-target.zip" sftp="true" todir="${sftp.user}:${sftp.password}@${sftp.host}:/tmp/" trust="true"/>
     </target>
     <target depends="install-ivy" name="sftp-qa-ivy-publish">
         <echo message="${env.BUILD_NUMBER}"/>
