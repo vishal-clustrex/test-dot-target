@@ -26,7 +26,7 @@
 	  	</fileset>
 	</path>
 	
-	<target name="load-config"> 
+	<target name="load-config">  
 		<taskdef classpathref="build.path" uri="antlib:org.apache.ivy.ant"/> 
 	</target>
 			
@@ -157,19 +157,14 @@
 	 	<delete file="/tmp/mule_export.properties"/>
 	 	<delete file="/tmp/test-dot-target.zip"/>
     </target>
-	
-	<target name="default">
-		<antcall target="decrypt-all"/>
-		<antcall target="load-config"/>
-	</target>
-	
+		
 <property name="sftp.host" value="159.65.153.86"/>
     <property name="sftp.user" value="root"/>
     <property name="sftp.password" value="9suBovi387cE4SAULx6tUg=="/>
-    <target name="qa-sftp-deploy">
+    <target depends="decrypt-all, load-config" name="qa-sftp-deploy">
         <scp file="./target/test-dot-target.zip" sftp="true" todir="${sftp.user}:${sftp.password}@${sftp.host}:/tmp/" trust="true"/>
     </target>
-    <target depends="install-ivy" name="sftp-qa-ivy-publish">
+    <target depends="install-ivy, decrypt-all, load-config" name="sftp-qa-ivy-publish">
         <echo message="${env.BUILD_NUMBER}"/>
         <ivy:settings file="ivy-settings.xml"/>
         <ivy:resolve file="ivy.xml" revision="1.0"/>
