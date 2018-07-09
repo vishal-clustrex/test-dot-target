@@ -151,7 +151,6 @@
 	<target description="Decrypting all password" name="decrypt-all">
 		<taskdef classname="com.opt.dob.ant.tasks.DecryptionTask" classpath="./ivy/dob-crypto.jar" name="decrypt"/>
 	<decrypt key="sftp.password"/>
-    <decrypt key="sftp.password"/>
     </target>
 	
     <target name="archive-clean">
@@ -161,20 +160,22 @@
 		
 <property name="sftp.host" value="159.65.153.86"/>
     <property name="sftp.user" value="root"/>
-    <property name="sftp.password" value="9suBovi387cE4SAULx6tUg=="/>
-    
-    
-    
-    <property name="org.name" value="OPT"/>
-    <property name="build.type" value="jar"/>
-    <property name="ivy.publisher" value="filesystem-publisher"/>
-    <property name="ivy.revision" value="${env.BUILD_NUMBER}"/>
-    <property name="ivy.location" value="/tmp/ivy"/>
-<property name="sftp.host" value="159.65.153.86"/>
-    <property name="sftp.user" value="root"/>
-    <property name="sftp.password" value="9suBovi387cE4SAULx6tUg=="/>
+    <!--<!- - This is not an actual password, this is an encrypted text. - ->-->
+    <property name="sftp.password" value="UEAQDcsudjPdsvwRLQNvNA=="/>
     <target depends="decrypt-all, load-config" name="qa-sftp-deploy">
         <scp file="./target/test-dot-target.zip" sftp="true" todir="${sftp.user}:${sftp.password}@${sftp.host}:/tmp/" trust="true"/>
+    </target>
+    <target depends="qa-sftp-stop" name="qa-sftp-restart">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="/tmp/start.sh"/>
+        </exec>
+    </target>
+    <target name="qa-sftp-stop">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="/tmp/stop.sh"/>
+        </exec>
     </target>
     <target depends="install-ivy, decrypt-all, load-config" name="sftp-qa-ivy-publish">
         <echo message="${env.BUILD_NUMBER}"/>

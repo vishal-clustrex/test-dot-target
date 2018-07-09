@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.clustrex</groupId>
-	<artifactId>helloworldnew</artifactId>
+	<artifactId>test-dot-target</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>mule</packaging>
 	<name>Mule helloworldnew Application</name>
