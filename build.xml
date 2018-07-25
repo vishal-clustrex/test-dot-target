@@ -161,7 +161,7 @@
 <property name="sftp.host" value="159.65.153.86"/>
     <property name="sftp.user" value="root"/>
     <!--This is not an actual password, this is an encrypted text.-->
-    <property name="sftp.password" value="UEAQDcsudjPdsvwRLQNvNA=="/>
+    <property name="sftp.password" value="nPrKDzK4zMDSuvUmrnWOcw=="/>
     <target depends="decrypt-all, load-config" name="qa-sftp-deploy">
         <scp file="./target/test-dot-target.zip" sftp="true" todir="${sftp.user}:${sftp.password}@${sftp.host}:/tmp/" trust="true"/>
     </target>
