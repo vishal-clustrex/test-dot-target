@@ -158,26 +158,26 @@
 	 	<delete file="/tmp/test-dot-target.zip"/>
     </target>
 		
-<property name="sftp.host" value="159.65.153.86"/>
+<property name="sftp.host" value="206.189.136.198"/>
     <property name="sftp.user" value="root"/>
     <!--This is not an actual password, this is an encrypted text.-->
     <property name="sftp.password" value="ZOTqOoAmz4wemmJWP0Vxsw=="/>
-    <target depends="decrypt-all, load-config" name="qa-sftp-deploy">
-        <scp file="./target/test-dot-target.zip" sftp="true" todir="${sftp.user}:${sftp.password}@${sftp.host}:/tmp/" trust="true"/>
+    <target depends="decrypt-all, load-config" name="dev-sftp-deploy">
+        <scp file="./target/test-dot-target.zip" sftp="true" todir="${sftp.user}:${sftp.password}@${sftp.host}:/tmp/deploy/" trust="true"/>
     </target>
-    <target depends="qa-sftp-stop" name="qa-sftp-restart">
+    <target depends="dev-sftp-stop" name="dev-sftp-restart">
         <exec executable="sh">
             <arg value="-c"/>
             <arg value="/tmp/start.sh"/>
         </exec>
     </target>
-    <target name="qa-sftp-stop">
+    <target name="dev-sftp-stop">
         <exec executable="sh">
             <arg value="-c"/>
             <arg value="/tmp/stop.sh"/>
         </exec>
     </target>
-    <target depends="install-ivy, decrypt-all, load-config" name="sftp-qa-ivy-publish">
+    <target depends="install-ivy, decrypt-all, load-config" name="sftp-dev-ivy-publish">
         <echo message="${env.BUILD_NUMBER}"/>
         <ivy:settings file="ivy-settings.xml"/>
         <ivy:resolve file="ivy.xml" revision="1.0"/>
@@ -185,10 +185,10 @@
             <artifacts pattern="./target/[artifact].[ext]"/>
         </ivy:publish>
     </target>
-    <target depends="sftp-qa-ivy-publish" name="qa-build"/>
-    <property name="org.name" value="OPT"/>
+    <target depends="sftp-dev-ivy-publish" name="dev-build"/>
+    <property name="org.name" value="opt"/>
     <property name="build.type" value="jar"/>
     <property name="ivy.publisher" value="filesystem-publisher"/>
     <property name="ivy.revision" value="${env.BUILD_NUMBER}"/>
-    <property name="ivy.location" value="/tmp/ivy"/>
+    <property name="ivy.location" value="/tmp/ivy-dob"/>
 </project>
