@@ -13,6 +13,7 @@
 	<property name="build.dir" value="${root.dir}/classes"/>
 	<property name="dist" value="./target/test-dot-target.zip"/>
 	<property name="src.dir" value="${basedir}/src"/>
+	<property name="tmp.dir" value="/tmp/mule-dob-tmp/"/>
 	
 	<property name="web.dir" value="WebContent"/>
 	<property location="resources" name="resources.dir"/>
@@ -110,7 +111,7 @@
     </target>	
 
     <target depends="mvn-compile" name="overall-zip">
-    	<zip basedir="." destfile="/tmp/test-dot-target.zip"/>
+    	<zip basedir="." destfile="${tmp.dir}test-dot-target.zip"/>
     </target>
 	 
 	
@@ -122,7 +123,7 @@
     </target>
 	
     <target name="mule-export-property">
-	    <propertyfile comment="" file="/tmp/mule_export.properties">
+	    <propertyfile comment="" file="${tmp.dir}mule_export.properties">
 		  <entry key="mule_export_version" value="1.0"/>
 		  <entry key="mule_exported_projects" value="test-dot-target"/>
 	    </propertyfile>    
@@ -150,34 +151,29 @@
 	
 	<target description="Decrypting all password" name="decrypt-all">
 		<taskdef classname="com.opt.dob.ant.tasks.DecryptionTask" classpath="./ivy/dob-crypto.jar" name="decrypt"/>
-	<decrypt key="sftp.password"/>
-    </target>
+	</target>
 	
     <target name="archive-clean">
-	 	<delete file="/tmp/mule_export.properties"/>
-	 	<delete file="/tmp/test-dot-target.zip"/>
+	 	<delete file="${tmp.dir}mule_export.properties"/>
+	 	<delete file="${tmp.dir}test-dot-target.zip"/>
     </target>
-		
-<property name="sftp.host" value="206.189.136.198"/>
-    <property name="sftp.user" value="root"/>
-    <!--This is not an actual password, this is an encrypted text.-->
-    <property name="sftp.password" value="ZOTqOoAmz4wemmJWP0Vxsw=="/>
-    <target depends="decrypt-all, load-config" name="dev-sftp-deploy">
-        <scp file="./target/test-dot-target.zip" sftp="true" todir="${sftp.user}:${sftp.password}@${sftp.host}:/tmp/deploy/" trust="true"/>
+	
+<target name="dev-filesystem-deploy">
+        <copy file="./target/test-dot-target.zip" todir="/tmp/deploy/"/>
     </target>
-    <target depends="dev-sftp-stop" name="dev-sftp-restart">
+    <target depends="dev-app-stop" name="dev-app-restart">
         <exec executable="sh">
             <arg value="-c"/>
-            <arg value="/tmp/start.sh"/>
+            <arg value="./start.sh"/>
         </exec>
     </target>
-    <target name="dev-sftp-stop">
+    <target name="dev-app-stop">
         <exec executable="sh">
             <arg value="-c"/>
-            <arg value="/tmp/stop.sh"/>
+            <arg value="./stop.sh"/>
         </exec>
     </target>
-    <target depends="install-ivy, decrypt-all, load-config" name="sftp-dev-ivy-publish">
+    <target depends="install-ivy, decrypt-all, load-config" name="filesystem-dev-ivy-publish">
         <echo message="${env.BUILD_NUMBER}"/>
         <ivy:settings file="ivy-settings.xml"/>
         <ivy:resolve file="ivy.xml" revision="1.0"/>
@@ -185,7 +181,7 @@
             <artifacts pattern="./target/[artifact].[ext]"/>
         </ivy:publish>
     </target>
-    <target depends="sftp-dev-ivy-publish" name="dev-build"/>
+    <target depends="filesystem-dev-ivy-publish" name="dev-build"/>
     <property name="org.name" value="opt"/>
     <property name="build.type" value="jar"/>
     <property name="ivy.publisher" value="filesystem-publisher"/>
