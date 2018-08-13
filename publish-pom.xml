@@ -8,7 +8,7 @@
   <description>
   	For installing the JAR's to the repository
   </description>
-
+   
   <build>
     <plugins>
       <plugin>
@@ -16,7 +16,39 @@
         <artifactId>maven-deploy-plugin</artifactId>
         <executions>
           
-        </executions>
+        <execution>
+                        <id>deploy-1</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>deploy-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>/tmp/dotoolkit/test-dot-target-source/lib/activation.jar</file>
+                            <groupId>com.opt</groupId>
+                            <artifactId>activation</artifactId>
+                            <version>1.0</version>
+                            <packaging>jar</packaging>
+                            <repositoryId>server-manager</repositoryId>
+                            <url>scp://178.128.216.51/tmp/maven</url>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>deploy-2</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>deploy-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>/tmp/dotoolkit/test-dot-target-source/lib/javafx-ui-common.jar</file>
+                            <groupId>com.opt</groupId>
+                            <artifactId>javafx-ui-common</artifactId>
+                            <version>1.0</version>
+                            <packaging>jar</packaging>
+                            <repositoryId>server-manager</repositoryId>
+                            <url>scp://178.128.216.51/tmp/maven</url>
+                        </configuration>
+                    </execution>
+                </executions>
       </plugin>
     </plugins>
 	<extensions>
