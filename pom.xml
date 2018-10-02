@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.dob</groupId>
+	<groupId>com.opt</groupId>
 	<artifactId>test-dot-target</artifactId>
     <version>1.0.0</version>
     <packaging>mule</packaging>
@@ -124,7 +124,17 @@
 			<version>${mule.version}</version>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+	<dependency>
+            <groupId>com.opt</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.opt</groupId>
+            <artifactId>javafx-ui-common</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 
 	<repositories>
           <repository>
@@ -140,9 +150,9 @@
             <layout>default</layout>
         </repository>
     <repository>
-            <id>codehaus-mule-repo</id>
-            <name>codehaus-mule-repo</name>
-            <url>https://repository.mulesoft.org/nexus/content/groups/public/</url>
+            <id>opt-dev</id>
+            <name>opt-dev</name>
+            <url>file:///tmp/dob/maven-repo/</url>
             <layout>default</layout>
         </repository>
     </repositories>
