@@ -29,7 +29,7 @@
                             <version>1.0</version>
                             <packaging>jar</packaging>
                             <repositoryId>server-manager</repositoryId>
-                            <url>file:///tmp/dob/maven-repo/</url>
+                            <url>file:///var/www/html/maven/</url>
                         </configuration>
                     </execution>
                     <execution>
@@ -45,7 +45,7 @@
                             <version>1.0</version>
                             <packaging>jar</packaging>
                             <repositoryId>server-manager</repositoryId>
-                            <url>file:///tmp/dob/maven-repo/</url>
+                            <url>file:///var/www/html/maven/</url>
                         </configuration>
                     </execution>
                 </executions>
