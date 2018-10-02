@@ -152,7 +152,7 @@
     <repository>
             <id>opt-dev</id>
             <name>opt-dev</name>
-            <url>file:///tmp/dob/maven-repo/</url>
+            <url>http://test.com//tmp/dob/maven-repo/</url>
             <layout>default</layout>
         </repository>
     </repositories>
