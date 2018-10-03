@@ -134,16 +134,6 @@
             <artifactId>javafx-ui-common</artifactId>
             <version>1.0</version>
         </dependency>
-    <dependency>
-            <groupId>com.opt</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.opt</groupId>
-            <artifactId>javafx-ui-common</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 
 	<repositories>
@@ -157,12 +147,6 @@
             <id>mulesoft-releases</id>
             <name>MuleSoft Releases Repository</name>
             <url>http://repository.mulesoft.org/releases/</url>
-            <layout>default</layout>
-        </repository>
-    <repository>
-            <id>opt-dev</id>
-            <name>opt-dev</name>
-            <url>http://localhost/maven/</url>
             <layout>default</layout>
         </repository>
     <repository>
