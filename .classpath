@@ -10,6 +10,6 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
-<classpathentry kind="lib" path="M2_REPO/com/opt/activation/1.0activation-1.0.jar"/>
-    <classpathentry kind="lib" path="M2_REPO/com/opt/javafx-ui-common/1.0javafx-ui-common-1.0.jar"/>
+<classpathentry kind="lib" path="M2_REPO/com/opt/activation/1.0/activation-1.0.jar"/>
+    <classpathentry kind="lib" path="M2_REPO/com/opt/javafx-ui-common/1.0/javafx-ui-common-1.0.jar"/>
 </classpath>
