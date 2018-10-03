@@ -152,7 +152,7 @@
     <repository>
             <id>opt-dev</id>
             <name>opt-dev</name>
-            <url>http://localhost/var/www/html/maven/</url>
+            <url>http://localhost/maven/</url>
             <layout>default</layout>
         </repository>
     </repositories>

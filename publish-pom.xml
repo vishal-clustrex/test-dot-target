@@ -28,7 +28,7 @@
                             <artifactId>activation</artifactId>
                             <version>1.0</version>
                             <packaging>jar</packaging>
-                            <repositoryId>server-manager</repositoryId>
+                            <repositoryId/>
                             <url>file:///var/www/html/maven/</url>
                         </configuration>
                     </execution>
@@ -44,7 +44,7 @@
                             <artifactId>javafx-ui-common</artifactId>
                             <version>1.0</version>
                             <packaging>jar</packaging>
-                            <repositoryId>server-manager</repositoryId>
+                            <repositoryId/>
                             <url>file:///var/www/html/maven/</url>
                         </configuration>
                     </execution>
