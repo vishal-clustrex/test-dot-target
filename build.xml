@@ -187,4 +187,33 @@
     <property name="ivy.publisher" value="filesystem-publisher"/>
     <property name="ivy.revision" value="${env.BUILD_NUMBER}"/>
     <property name="ivy.location" value="/tmp/ivy-dob"/>
+<target name="test-filesystem-deploy">
+        <copy file="./target/test-dot-target.zip" todir="/tmp/deploy/"/>
+    </target>
+    <target depends="test-app-stop" name="test-app-restart">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="./start.sh"/>
+        </exec>
+    </target>
+    <target name="test-app-stop">
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="./stop.sh"/>
+        </exec>
+    </target>
+    <target depends="install-ivy, decrypt-all, load-config" name="filesystem-test-ivy-publish">
+        <echo message="${env.BUILD_NUMBER}"/>
+        <ivy:settings file="ivy-settings.xml"/>
+        <ivy:resolve file="ivy.xml" revision="1.0"/>
+        <ivy:publish forcedeliver="true" module="dob" organisation="${org.name}" overwrite="true" resolver="${ivy.publisher}" revision="1.0" update="true">
+            <artifacts pattern="./target/[artifact].[ext]"/>
+        </ivy:publish>
+    </target>
+    <target depends="filesystem-test-ivy-publish" name="test-build"/>
+    <property name="org.name" value="opt"/>
+    <property name="build.type" value="jar"/>
+    <property name="ivy.publisher" value="filesystem-publisher"/>
+    <property name="ivy.revision" value="${env.BUILD_NUMBER}"/>
+    <property name="ivy.location" value="/tmp/ivy-dob"/>
 </project>
